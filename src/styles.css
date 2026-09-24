@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * MediaI Health design system.
+ * MedicaI Health design system.
  * Clinical, calm and trustworthy: deep teal primary, soft mist surfaces,
  * clear status colours for normal / high / low / urgent findings.
  * All colours are oklch semantic tokens — never hardcode colours in components.

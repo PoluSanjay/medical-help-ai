@@ -18,13 +18,13 @@ import { formatBytes } from "@/lib/report-types";
 export const Route = createFileRoute("/reports")({
   head: () => ({
     meta: [
-      { title: "My Reports | MediaI Health" },
+      { title: "My Reports | MedicaI Health" },
       {
         name: "description",
         content:
-          "Review, download or delete the medical reports you have analysed with MediaI Health. Your history stays private on your device.",
+          "Review, download or delete the medical reports you have analysed with MedicaI Health. Your history stays private on your device.",
       },
-      { property: "og:title", content: "My Reports | MediaI Health" },
+      { property: "og:title", content: "My Reports | MedicaI Health" },
       {
         property: "og:description",
         content: "Your previously analysed medical reports, stored privately in your own browser.",

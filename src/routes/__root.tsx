@@ -78,10 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MediaI Health" },
+      { title: "MedicaI Health" },
       { name: "description", content: "AI-assisted health information and medical report analysis." },
-      { name: "author", content: "MediaI Health" },
-      { property: "og:title", content: "MediaI Health" },
+      { name: "author", content: "MedicaI Health" },
+      { property: "og:title", content: "MedicaI Health" },
       { property: "og:description", content: "AI-assisted health information and medical report analysis." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
