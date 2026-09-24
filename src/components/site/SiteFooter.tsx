@@ -18,14 +18,14 @@ export function SiteFooter() {
         <div className="text-sm text-muted-foreground">
           <p className="font-medium text-foreground">Medical disclaimer</p>
           <p className="mt-2">
-            MediaI Health provides general health information only. It does not diagnose conditions, prescribe
+            MedicaI Health provides general health information only. It does not diagnose conditions, prescribe
             medication, or replace advice from a qualified healthcare professional. In an emergency, contact your local
             emergency services immediately.
           </p>
         </div>
       </div>
       <div className="border-t border-border px-4 py-4 text-center text-xs text-muted-foreground sm:px-6">
-        © {new Date().getFullYear()} MediaI Health. All rights reserved.
+        © {new Date().getFullYear()} MedicaI Health. All rights reserved.
       </div>
     </footer>
   );

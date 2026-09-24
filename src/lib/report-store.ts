@@ -62,7 +62,7 @@ export function useReportHistory() {
 
 export function downloadAnalysis(record: ReportRecord) {
   const lines: string[] = [];
-  lines.push(`MediaI Health — AI Medical Report Analysis`);
+  lines.push(`MedicaI Health — AI Medical Report Analysis`);
   lines.push(`Report: ${record.fileName}`);
   lines.push(`Analysed: ${new Date(record.createdAt).toLocaleString()}`);
   if (record.demo) lines.push(`MODE: DEMO — sample data, not a real medical analysis.`);

@@ -16,17 +16,17 @@ import type { ReportRecord } from "@/lib/report-types";
 export const Route = createFileRoute("/analyzer")({
   head: () => ({
     meta: [
-      { title: "AI Medical Report Analyzer | MediaI Health" },
+      { title: "AI Medical Report Analyzer | MedicaI Health" },
       {
         name: "description",
         content:
           "Upload a lab report as PDF or image and get a plain-language explanation of your results, nutrition ideas and guidance on who to consult.",
       },
-      { property: "og:title", content: "AI Medical Report Analyzer | MediaI Health" },
+      { property: "og:title", content: "AI Medical Report Analyzer | MedicaI Health" },
       {
         property: "og:description",
         content:
-          "Understand your medical report in plain language with MediaI Health's AI analyzer. Information only — never a diagnosis.",
+          "Understand your medical report in plain language with MedicaI Health's AI analyzer. Information only — never a diagnosis.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -134,7 +134,7 @@ function AnalyzerPage() {
       <SiteHeader />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
         <header className="mb-6">
-          <p className="text-sm font-semibold text-primary">MediaI Health</p>
+          <p className="text-sm font-semibold text-primary">MedicaI Health</p>
           <h1 className="mt-1 font-display text-3xl font-semibold sm:text-4xl">AI Medical Report Analyzer</h1>
           <p className="mt-2 max-w-2xl text-muted-foreground">
             Upload a lab report or scan and get your values explained in plain language, along with general nutrition,

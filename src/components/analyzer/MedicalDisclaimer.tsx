@@ -18,7 +18,7 @@ export function MedicalDisclaimer({ compact = false, className }: { compact?: bo
         <div>
           <p className="font-semibold">This is health information, not medical advice.</p>
           <p className="mt-1 text-muted-foreground">
-            MediaI Health does not diagnose conditions and never recommends starting, stopping or changing any
+            MedicaI Health does not diagnose conditions and never recommends starting, stopping or changing any
             medication. AI analysis can be incomplete or wrong. Always confirm results with a qualified healthcare
             professional, and seek emergency care for urgent symptoms.
           </p>

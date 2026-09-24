@@ -59,13 +59,13 @@ const steps = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MediaI Health — Understand Your Medical Reports" },
+      { title: "MedicaI Health — Understand Your Medical Reports" },
       {
         name: "description",
         content:
-          "MediaI Health explains your lab and medical reports in plain language, with nutrition, activity and consultation guidance. Information only, never a diagnosis.",
+          "MedicaI Health explains your lab and medical reports in plain language, with nutrition, activity and consultation guidance. Information only, never a diagnosis.",
       },
-      { property: "og:title", content: "MediaI Health — Understand Your Medical Reports" },
+      { property: "og:title", content: "MedicaI Health — Understand Your Medical Reports" },
       {
         property: "og:description",
         content:
@@ -95,7 +95,7 @@ function Home() {
                 Understand your medical report in plain language
               </h1>
               <p className="mt-4 max-w-xl text-lg text-muted-foreground">
-                Upload a lab report as a PDF or photo. MediaI Health reads the values, explains what they generally
+                Upload a lab report as a PDF or photo. MedicaI Health reads the values, explains what they generally
                 mean, and shows you what is worth discussing with a doctor.
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
