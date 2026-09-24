@@ -9,7 +9,7 @@ export function SiteFooter() {
             <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Activity className="size-4" aria-hidden />
             </span>
-            <span className="font-display font-semibold">MediaI Health</span>
+            <span className="font-display font-semibold">MedicaI Health</span>
           </div>
           <p className="mt-3 max-w-md text-sm text-muted-foreground">
             AI-assisted health information to help you understand your medical reports in plain language.
