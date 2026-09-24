@@ -22,7 +22,7 @@ export function SiteHeader() {
             <Activity className="size-5" aria-hidden />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight">
-            MediaI<span className="text-primary"> Health</span>
+            MedicaI<span className="text-primary"> Health</span>
           </span>
         </Link>
 
