@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzerRouteImport } from './routes/analyzer'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ApiPublicAnalyzeRouteImport } from './routes/api/public/analyze'
+import { Route as ApiPublicFollowUpRouteImport } from './routes/api/public/follow-up'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +30,69 @@ const ReportsRoute = ReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAnalyzeRoute = ApiPublicAnalyzeRouteImport.update({
+  id: '/api/public/analyze',
+  path: '/api/public/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicFollowUpRoute = ApiPublicFollowUpRouteImport.update({
+  id: '/api/public/follow-up',
+  path: '/api/public/follow-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
   '/reports': typeof ReportsRoute
+  '/api/public/analyze': typeof ApiPublicAnalyzeRoute
+  '/api/public/follow-up': typeof ApiPublicFollowUpRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
   '/reports': typeof ReportsRoute
+  '/api/public/analyze': typeof ApiPublicAnalyzeRoute
+  '/api/public/follow-up': typeof ApiPublicFollowUpRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
   '/reports': typeof ReportsRoute
+  '/api/public/analyze': typeof ApiPublicAnalyzeRoute
+  '/api/public/follow-up': typeof ApiPublicFollowUpRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analyzer' | '/reports'
+  fullPaths:
+    | '/'
+    | '/analyzer'
+    | '/reports'
+    | '/api/public/analyze'
+    | '/api/public/follow-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analyzer' | '/reports'
-  id: '__root__' | '/' | '/analyzer' | '/reports'
+  to:
+    | '/'
+    | '/analyzer'
+    | '/reports'
+    | '/api/public/analyze'
+    | '/api/public/follow-up'
+  id:
+    | '__root__'
+    | '/'
+    | '/analyzer'
+    | '/reports'
+    | '/api/public/analyze'
+    | '/api/public/follow-up'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyzerRoute: typeof AnalyzerRoute
   ReportsRoute: typeof ReportsRoute
+  ApiPublicAnalyzeRoute: typeof ApiPublicAnalyzeRoute
+  ApiPublicFollowUpRoute: typeof ApiPublicFollowUpRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +118,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/analyze': {
+      id: '/api/public/analyze'
+      path: '/api/public/analyze'
+      fullPath: '/api/public/analyze'
+      preLoaderRoute: typeof ApiPublicAnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/follow-up': {
+      id: '/api/public/follow-up'
+      path: '/api/public/follow-up'
+      fullPath: '/api/public/follow-up'
+      preLoaderRoute: typeof ApiPublicFollowUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +139,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyzerRoute: AnalyzerRoute,
   ReportsRoute: ReportsRoute,
+  ApiPublicAnalyzeRoute: ApiPublicAnalyzeRoute,
+  ApiPublicFollowUpRoute: ApiPublicFollowUpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
