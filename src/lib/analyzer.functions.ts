@@ -1,67 +1,47 @@
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
+import { getRequestHeader } from "@tanstack/react-start/server";
 
-import {
-  AnalyzerError,
-  analyzeExtraction,
-  answerFollowUp,
-  extractFromFile,
-  safetyCheck,
-} from "./analyzer.server";
-import type { AnalysisResult, ExtractionResult } from "./report-types";
+import { runAnalyze, runFollowUp, type AnalyzeResponse, type FollowUpResponse } from "./analyzer-core.server";
+import { analyzeInput, followUpInput } from "./analyzer-schemas";
 
-const analyzeInput = z.object({
-  fileName: z.string().min(1).max(255),
-  mimeType: z.enum(["application/pdf", "image/jpeg", "image/jpg", "image/png"]),
-  dataUrl: z.string().min(32).max(20_000_000),
-});
+// On Vercel, ANALYZER_API_URL + ANALYZER_SHARED_SECRET are set and requests are
+// proxied to the Lovable-hosted endpoints (LOVABLE_API_KEY never leaves Lovable).
+// On Lovable (preview/published) they are unset and the AI runs locally.
+async function proxy<T>(path: string, body: unknown, fallback: T): Promise<T | null> {
+  const base = process.env["ANALYZER_API_URL"];
+  const secret = process.env["ANALYZER_SHARED_SECRET"];
+  if (!base || !secret) return null;
+  const clientIp =
+    getRequestHeader("x-forwarded-for")?.split(",")[0]?.trim() ?? getRequestHeader("x-real-ip") ?? "unknown";
+  try {
+    const res = await fetch(`${base.replace(/\/$/, "")}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${secret}`, "X-Client-IP": clientIp },
+      body: JSON.stringify(body),
+    });
+    return (await res.json()) as T;
+  } catch {
+    return fallback;
+  }
+}
 
 export const analyzeReport = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => analyzeInput.parse(data))
-  .handler(
-    async ({
-      data,
-    }): Promise<
-      | { ok: true; extraction: ExtractionResult; analysis: AnalysisResult | null }
-      | { ok: false; code: string; message: string }
-    > => {
-      try {
-        const extraction = await extractFromFile(data);
-        if (!extraction.readable || (extraction.tests.length === 0 && extraction.doctor_notes.length === 0)) {
-          return { ok: true, extraction: { ...extraction, readable: false }, analysis: null };
-        }
-        const analysis = safetyCheck(await analyzeExtraction(extraction));
-        return { ok: true, extraction, analysis };
-      } catch (error) {
-        if (error instanceof AnalyzerError) return { ok: false, code: error.code, message: error.message };
-        return { ok: false, code: "unknown", message: "Something went wrong while analysing the report." };
-      }
-    },
-  );
-
-const followUpInput = z.object({
-  question: z.string().trim().min(1).max(500),
-  extraction: z.any(),
-  analysis: z.any().nullable(),
-  history: z
-    .array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(4000) }))
-    .max(20)
-    .default([]),
-});
+  .handler(async ({ data }): Promise<AnalyzeResponse> => {
+    const remote = await proxy<AnalyzeResponse>("/api/public/analyze", data, {
+      ok: false,
+      code: "network",
+      message: "Could not reach the analysis service. Please try again.",
+    });
+    return remote ?? runAnalyze(data);
+  });
 
 export const askAboutReport = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => followUpInput.parse(data))
-  .handler(async ({ data }): Promise<{ ok: true; answer: string } | { ok: false; message: string }> => {
-    try {
-      const answer = await answerFollowUp({
-        extraction: data.extraction as ExtractionResult,
-        analysis: (data.analysis ?? null) as AnalysisResult | null,
-        history: data.history,
-        question: data.question,
-      });
-      return { ok: true, answer };
-    } catch (error) {
-      if (error instanceof AnalyzerError) return { ok: false, message: error.message };
-      return { ok: false, message: "The assistant could not answer just now. Please try again." };
-    }
+  .handler(async ({ data }): Promise<FollowUpResponse> => {
+    const remote = await proxy<FollowUpResponse>("/api/public/follow-up", data, {
+      ok: false,
+      message: "The assistant could not answer just now. Please try again.",
+    });
+    return remote ?? runFollowUp(data);
   });
